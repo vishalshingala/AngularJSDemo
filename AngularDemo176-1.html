@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html ng-app="exampleApp">
+<head>
+    <title>Broadcast emit and On Angular Services</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+</head>
+<body>
+    <div ng-controller="defaultCtrl">
+        defaultCtrl Message: {{defMsg}}
+        <div ng-controller="childCtrl">
+            childCtrl Message: {{childMsg}}
+            <p>
+                <button ng-click="emitChildEvent()">Emit Event</button>
+            </p>
+        </div>
+    </div>
+    <script>
+        angular.module("exampleApp", [])
+        .controller("defaultCtrl", function ($scope) {
+            $scope.defMsg = "Waiting for a message";
+        })
+        .controller("childCtrl", function ($scope) {
+            $scope.childMsg = "Waiting for a message";
+            $scope.emitChildEvent = function () {
+                $scope.$emit("childEvent", "Child Event");
+            }
+            $scope.$on("childEvent", function (event, msg) {
+                $scope.childMs = msg;
+            });
+        });
+    </script>
+</body>
+</html>
+<!--$Emit event Upword hirarchy
+$on suscribing
+$broadcast events Downwords Hirarchy-->

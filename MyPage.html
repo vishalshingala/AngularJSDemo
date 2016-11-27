@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+</head>
+<body>
+    <style>
+        .divClass table{
+           border-collapse: collapse;
+           width: 100%;
+        }
+        .divClass table tbody tr th{
+            background-color:blue;
+        }
+        .divClass table tr{
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    <div class="divClass">
+        <table>
+            <tbody>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                </tr>
+            </tbody>
+            <tr>
+                <td>1</td>
+                <td>Vishal</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Vishal</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Vishal</td>
+            </tr>
+        </table>
+    </div>    
+    
+</body>
+</html>
+<script type="text/javascript">
+    function sumOfThrees(n) {
+        debugger;
+        var pow = 3, returnOutString, answer = 0, ansExp = '', i = 0, maxPower = undefined, isAnsFound = false;
+        while (Math.pow(pow, i) <= n) {
+            //answer=Math.pow(pow, n);
+            maxPower = i;
+            i++;
+        }
+        if (maxPower != undefined) {
+            return maxPower != 0 ? '3^' + maxPower + '+' + sumOfThrees(n - Math.pow(pow, maxPower)) : '3^' + maxPower;
+        } else {
+            return '';
+        }
+    }
+
+    $(document).ready(function () {
+        //alert(sumOfThrees(37));
+    });
+
+    var closerDemo = function () {
+        var count = 0;
+        var incrementCount = function () {
+            return count + 1;
+        };
+        return incrementCount;
+    };
+
+</script>

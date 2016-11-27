@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>JQuery Date Picker Demo</title>
+	<meta charset="utf-8" />
+    <link href="Scripts/jquery-ui.css" rel="stylesheet" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/jquery-ui.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+</head>
+<body>
+    Enter Days:<input type="number" id="daysId" min="0" /><br /><br />
+    Select Date:<input type="text" id="dateId" onchange="onChangeFirstDate(this)" /><br /><br />
+    Final DatePicker :<input type="text" id="finalDatePickerId" readonly /><br /><br /><br /><br />
+<script type="text/javascript">
+    $(function () {
+        $("#dateId").datepicker({ dateFormat: 'dd-mm-yy' });
+        $("#finalDatePickerId").datepicker({ dateFormat: 'dd-mm-yy' });
+        //$(".selector").datepicker({ dateFormat: 'yy-mm-dd' })
+    });
+    Date.prototype.addDays = function (days) {
+        this.setDate(this.getDate() + parseInt(days));
+        return this;
+    };
+
+    function onChangeFirstDate(sender) {
+        var selectedDate = $(sender).val();
+        var selectedDays = $("#daysId").val();
+        //var currentDate = new Date(selectedDate);
+        var currentDate = $("#dateId").datepicker("getDate");
+        if ((selectedDays - 0) != 0) {
+            var finalDate = currentDate.addDays(selectedDays - 0);
+            var days = finalDate.getDate();
+            var months = finalDate.getMonth()+1;
+            var years = finalDate.getFullYear();
+            //var displayFinaldate = months + "/" + days + "/" + years;
+            var displayFinaldate = days + "-" + months + "-" + years;
+            $("#finalDatePickerId").datepicker("setDate", displayFinaldate);
+        }
+        
+    }
+
+    function onChangeDate(sender) {
+        debugger;
+        var currentDate = $("#dateId").datepicker("getDate");
+        debugger;
+    }
+
+</script>
+</body>
+</html>

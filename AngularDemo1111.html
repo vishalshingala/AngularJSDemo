@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Provider And Config Test</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <script src="Scripts/angular-route.js"></script>
+</head>
+<body>
+    <div ng-controller="myController">
+
+    </div>
+    <script type="text/javascript">
+        var app = angular.module("myApp", ["ngRoute"]);
+        debugger;
+        app.factory("myInterceptors", function () {
+            debugger;
+            var returnInterceptor = {
+                request: function (config) {
+                    config.headers['x-session-token'] = 415954427904;
+                    return config;
+                },
+                requestError: function (config) {
+                    debugger;
+                },
+                responseError: function (config) {
+                    debugger;
+                }
+            };
+            return returnInterceptor;
+        });
+        app.config(function ($routeProvider,$httpProvider) {
+            debugger;
+            $httpProvider.interceptors.push("myInterceptors");
+        });
+        app.controller("myController", function ($http) {
+            debugger;
+            $http({ url: "https://api.github.com/users/naorye/repos", method: "GET" }).then(function (response) {
+                debugger;
+            }, function (error) {
+                debugger;
+            });
+        });
+    </script>
+</body>
+</html>

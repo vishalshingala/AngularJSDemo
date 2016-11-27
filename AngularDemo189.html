@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <script src="Scripts/angular-route.js"></script>
+</head>
+<body>
+    <ul>
+        <li>
+            <a href="#/">Home</a>
+        </li>
+        <li>
+            <a href="#main">Main</a>
+        </li>
+    </ul>
+    <div ng-view></div>
+    <script type="text/javascript">
+        var app = angular.module("myApp", ["ngRoute"]);
+        debugger;
+        app.config(function ($routeProvider) {
+            $routeProvider.when("/", {
+                templateUrl: "/Directives/MyHomePage.html",
+                controller:"myController"
+            }).when("/main", {
+                templateUrl: "/Directives/MyMainPage.html",
+                controller:"myMainController"
+            });
+        });
+        app.controller("myController", function ($scope, $dataService) {
+            var myHomeData = $dataService.myHomeData();
+            $scope.name = myHomeData.name;
+            $scope.contactNo = myHomeData.contactNo;
+        });
+        app.controller("myMainController", function ($scope, $dataService) {
+            var myMainData = $dataService.myHomeData();
+            $scope.name = myMainData.name;
+            $scope.contactNo = myMainData.contactNo;
+        });
+        app.factory("$dataService", function ($http) {
+            return {
+                myHomeData: myHomeData,
+                mymainData: mymainData
+            };
+            function myHomeData() {
+                var homeObj = {
+                    name: 'Vishal',
+                    contactNo:8050756547
+                }
+                return homeObj;
+            }
+            function mymainData() {
+                var mainObj = {
+                    name: 'Dhara',
+                    contactNo: 8971643135
+                }
+                return mainObj;
+            }
+        });
+    </script>
+</body>
+</html>
+

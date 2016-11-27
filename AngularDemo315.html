@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+</head>
+<body ng-cloak>
+    <h1>Built-in Directives</h1>
+    <div ng-controller="DirDemoController">
+        <button ng-click="btnClicked()">Click Me!!</button>
+        <p>
+
+        </p>
+        Button clicked {{count}} times
+        <p></p>
+        <button ng-click="toggleForm()">{{btnText}}</button>
+        <div ng-hide="flag">
+            <p><label>Name:</label><input type="text" ng-model="name" /></p>
+            <p><label>Age:</label><input type="text" ng-model="age" /></p>
+            <p><button>Do Something</button></p>
+        </div>
+    </div>
+    <hr />
+    <div ng-controller="ListController">
+        <h3>List of Names</h3>
+        <label>Search Text: <input type="search" ng-model="lookFor.name" /> </label>
+        <p>
+            <!--<ul ng-repeat="actor in actors | filter:lookFor | orderBy:'-name' | limitTo:2">-->  <!--minus sign equals to orderby Dec-->
+            <ul ng-repeat="actor in actors | filter:lookFor">
+                <li>
+                    Name: <strong>{{actor.name}}</strong>
+                    City: <strong>{{actor.city | uppercase}}</strong>
+                </li>
+            </ul>           
+        </p>
+        <h3>Object Iteration Example</h3>
+        <p>
+            <ul ng-repeat="(key,value) in actorObject">
+                <li>
+                    Key:{{key}} Values:{{value}}
+                </li>
+            </ul>
+        </p>
+
+        <h1>Add Item To Name</h1>
+        <div>
+            <p><label>Name:</label><input type="text" ng-model="actorName" /></p>
+            <p><label>City:</label><input type="text" ng-model="actorCity" /></p>
+            <button ng-click="btnAddName()">Add Name</button>
+        </div>
+    </div>
+    <hr />
+    <div ng-controller="ListCustomDirectiveController">
+        <h3>List of Veggies</h3>
+        <label>Search Text: <input type="search" ng-model="lookFor.name" /> </label>
+        <p>
+            <ul ng-repeat="veg in veggies">
+                <li>
+                    Name: <strong>{{veg.name}}</strong>
+                    Cost: <strong>{{veg.price | indianCurrency}}</strong>
+                </li>
+            </ul>
+        </p>
+        <h1>Add Item To Veggies</h1>
+        <div>
+            <p><label>Name:</label><input type="text" ng-model="veggiesName" /></p>
+            <p><label>City:</label><input type="text" ng-model="veggiesCity" /></p>
+            <button ng-click="btnAddName()">Add Name</button>
+        </div>
+    </div>
+    <hr />
+    <div ng-controller="FilterCustomController">
+        <h1>Reverse Character</h1>
+        <p>
+            <label>Enter Text:<input type="text" ng-model="lookForInput" /></label>
+        </p>
+        <p>
+            Reverse String Output:{{lookForInput | reverseFilter}}
+        </p>
+        <p>
+            Capitalized  Text:{{lookForInput | capitalizedTextFilter}}           
+        </p>
+        <p>
+            Shuffle Character:{{lookForInput | shuffleCharactersFilter}}
+        </p>
+    </div>
+    <script type="text/javascript">
+        var myApp = angular.module("MyApp", []);
+        var dirDemoController = function ($scope) {
+            $scope.count = 0;
+            $scope.btnClicked = function () {
+                console.log("Button Clicked");
+                $scope.count++;
+                return count;
+            }
+            $scope.flag = true;
+            $scope.btnText = "Show Form";
+            $scope.toggleForm = function () {
+                $scope.flag = !$scope.flag;
+                $scope.btnText = ($scope.flag) ? "Show Form" : "Hode Form";
+            }            
+        };
+
+        myApp.controller("DirDemoController", dirDemoController);
+
+        var listController = function ($scope) {
+            $scope.actors = [
+                { name: "VIshal", city: "rajkot" },
+                { name: "Shingala", city: "mumbai" },
+                { name: "Vaidik", city: "ahmedabad" },
+            ];
+            $scope.actorObject = {
+                name: "Vishal",
+                city: "Rajkot",
+                phoneNo:8050,
+            };
+            $scope.btnAddName = function () {
+                $scope.actors.push({ name: $scope.actorName, city: $scope.actorCity });
+                $scope.actorName = "";
+                $scope.actorCity = "";
+            }
+        }
+        myApp.controller("ListController", listController);
+
+        // for Custom Directives
+
+        var listCustomDirectiveController = function ($scope) {
+            $scope.veggies = [
+                { name: "Radish", price: 50 },
+                { name: "Bottle", price: 100 },
+                { name: "Potato", price: 150 },
+                { name: "Tomato", price: 200 },
+                { name: "Veg1", price: 250 },
+            ];
+        }
+        myApp.controller("ListCustomDirectiveController", listCustomDirectiveController);
+
+        myApp.filter('indianCurrency', function () {
+            return function (amount) {
+                return "\u20b9" + amount;
+            }
+        });
+
+        var filterCustomController = function ($scope) {
+
+        }
+        myApp.controller("FilterCustomController", filterCustomController);
+        myApp.filter('reverseFilter', function () {
+            return function (inputString) {
+                if (!inputString) {
+                    return "";
+                }
+                else {
+                    return inputString.split("").reverse().join("");
+                }
+                
+            }
+        });
+        myApp.filter('capitalizedTextFilter', function () {
+            return function (capitalizedText) {
+                if (!capitalizedText) {
+                    return "";
+                }
+                else {
+                    return capitalizedText.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+
+                    //Else
+
+                    //var words = capitalizedText.split(' ');
+                    //for (var i = 0; i < words.length; ++i) {
+                    //    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1).toLowerCase();
+                    //}
+                    //return words.join(' ');
+                }
+                
+            }
+        });
+        myApp.filter('shuffleCharactersFilter', function () {
+            return function (inputString) {
+                if (!inputString) {
+                    return "";
+                }
+                else {
+                    var world = inputString.split('');
+                    var worldLength = world.length;
+                    for (var i = worldLength - 1; i > 0; i--) {
+                        var j = Math.floor(Math.random() * (i + 1));
+                        var tmp = world[i];
+                        world[i] = world[j];
+                        world[j] = tmp;
+                    }
+                    return world.join("");
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

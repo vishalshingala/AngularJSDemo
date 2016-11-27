@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+    <form action="{$engrootpath}clients.php?page={ClientPage::add_client}" id="addclient" name="addclient" method="POST" class="formclass" enctype="multipart/form-data">
+
+        <div class="manditory">* Fields are required</div>
+
+        {if $clientDetails['clientid'] > 0}
+        <input type="hidden" name="clientid" id="clientid" value="{$clientDetails['clientid']}" />
+        {/if}
+
+        <table cellpadding="10" cellspacing="10">
+
+            <tr>
+                <td valign="top"><label><strong>Client logo</strong></td>
+                <td valign="top"><label class="label">:</label></td>
+                <td valign="top"><input type="file" name="client_logo" id="client_logo" />&nbsp;Required logo size 230 X 65 px</td>
+            </tr>
+
+            <tr>
+                <td valign="top"><label><strong>Display Name</strong><span style="color:red;">*</span><br /></label></td>
+                <td valign="top"><label class="label">:</label></td>
+                <td valign="top"><input name="dname" id="dname" class="required textonly text" size="50" type="text" value="{$clientDetails['dispname']}" /></td>
+            </tr>
+
+
+
+
+
+            <tr>
+                <td valign="top"><label><strong>Email</strong><span style="color:red;">*</span><br /></label></td>
+                <td valign="top"><label class="label">:</label></td>
+                <td valign="top"><input name="txtemail" id="txtemail" size="50" type="text" class="email text required" value="{$clientDetails['emailid']}" remote="{$engrootpath}addUser.php?mode=check&uid={$clientDetails['client_user_id']}" /></td>
+            </tr>
+            <tr>
+                <td valign="top"><label><strong>Mobile Number</strong><span style="color:red;">*</span><br /></label></td>
+                <td valign="top"><label class="label">:</label></td>
+                <td valign="top"><input name="txtphone" id="txtphone" size="50" maxlength="11" type="text" class="digits text required" value="{$clientDetails['primaryphone']}" remote="{$engrootpath}addUser.php?mode=check&uid={$clientDetails['client_user_id']}" /></td>
+            </tr>
+
+            <tr>
+                <td valign="top"><label><strong>Services Enabled</strong><span style="color:red;">*</span><br /></label></td>
+                <td valign="top"><label class="label">:</label></td>
+                <td valign="top" class="pb5">
+
+                    <input type="checkbox" name="ehr_services_enabled" id="services_enabled1" value="1"
+                           {if $clientdetails['permissions'] & clientpermissions::ehr_bit} checked="checked" { />if}/>&nbsp;Patient Health records <br />
+
+
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top"><label><strong>Status</strong><span style="color:red;">*</span><br /></label></td>
+                <td valign="top"><label class="label">:</label></td>
+                <td valign="top">
+                    <input checked type="radio" name="status" {if $clientdetails['status']= ='Active' } checked="" { />if} value="Active" />&nbsp;Active&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="status" {if $clientdetails['status']= ='Inactive' } checked="" { />if} value="Inactive" />&nbsp;Inactive
+                </td>
+            </tr>
+            <tr>
+                <td valign="top"> <label></label></td>
+                <td valign="top"></td>
+                <td valign="top"><input type="submit" id="butsubmit" value="Submit" class="waves-effect waves-light btn" />&nbsp;&nbsp;<input type="button" name="#" id="butreset" value="Reset" class="cancel_btn" onclick="resetForm();" /></td>
+            </tr>
+
+        </table>
+    </form>
+    <script type="text/javascript">
+        function resetForm() {
+            $("#dname").val('');
+            $("#txtemail").val('');
+            $("#txtphone").val('');
+        }
+    </script>
+</body>
+</html>

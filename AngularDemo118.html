@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Provider And Config Test</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <script src="Scripts/angular-route.js"></script>
+</head>
+<body>
+    <div ng-controller="myController">
+
+    </div>
+    <script type="text/javascript">
+        var app = angular.module("myApp", ["ngRoute"]);
+        debugger;
+        app.provider("myProvider", function () {
+            var appName = "myApp";
+            this.setAppName = function (value) {
+                return appName = value;
+            }
+            this.$get = function () {
+                return {
+                    appName: appName
+                }
+            }
+        });
+        app.config(function (myProviderProvider, $routeProvider,$httpProvider) {
+            debugger;
+            myProviderProvider.setAppName("HelloName");
+        });
+        app.controller("myController", function (myProvider) {
+            debugger;
+        });
+    </script>
+</body>
+</html>

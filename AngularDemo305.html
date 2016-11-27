@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+</head>
+<body ng-init="message1='Welcome1';n1=10;n2=30">
+    <h1>Angular Demo 1</h1>
+
+    3 + 4 is {{3+4}}
+    <p>
+        <label>Type a message:<input type="text" id="messageId" ng-model="message"></label>
+    </p>
+    <p>
+        Your message is :<strong>{{message}}</strong>
+    </p>
+    <p>
+        Your variable is :<strong>{{message1}}</strong>
+        {{n1+n2}}<br />
+    </p>
+    <br />
+    <br />
+    <br />
+    <div>
+        CRUD Operations <br />
+
+
+        First Number: <input type="number" ng-model="n3" /><br />
+        Second Number: <input type="number" ng-model="n4" />
+        <p>
+            Add:{{n3+n4 ||  ''}}
+        </p>
+        <p>
+            Sub:{{n3-n4 ||  ''}}
+        </p>
+        <p>
+            Mul:{{n3*n4 ||  ''}}
+        </p>
+        <p>
+            Div:{{n3/n4 ||  ''}}
+        </p>
+    </div>
+    <script type="text/javascript">
+        var myApp = angular.module('MyApp', []);
+        // The second arg is an array of dependencies
+
+        // $ angular Definded object/Service
+        // $$ angular internally used  // Dont touch
+        myApp.controller("DemoController", function ($scope) {
+            $scope.x = 55;
+            $scope.y = 20;
+        });
+    </script>
+</body>
+</html>

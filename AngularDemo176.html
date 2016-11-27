@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html ng-app="superhero">
+<head>
+    <title>Timer Service</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+</head>
+<body>
+    <div ng-controller="timeoutController">
+        The Name is :{{name || "name not yet set!!"}}
+        <p></p>
+        <input type="text" ng-model="myModel" />
+        My model value is {{myModel}}
+
+        <!--Timer Cancel Code-->
+        <p>TO Cancel Timer Call</p>
+        <button ng-click="onClickTimer()">Cancel Timer</button>
+    </div>
+    <script>
+        var app = angular.module("superhero", []);
+        app.controller("timeoutController", function ($scope, $timeout) { // app.controller("timeoutController",['$scope','$window' function ($scope,$timeout) { }]); To Avoid Minification issue
+            var timer= $timeout(function () {
+                $scope.name = "Vishal Shingala";
+            }, 5000);
+
+            // To Cancel TimeOut we need to create Object and call cancel function
+
+            $scope.onClickTimer = function () {
+                $timeout.cancel(timer);
+            }
+        });
+    </script>
+</body>
+</html>

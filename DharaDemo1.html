@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <input type="number" name="rel_age" min="1" max="150" id="rel_age" onkeyup="this.value = checkMinMaxValues(this.value, 1, 150)" style="width:55px !important; padding:0px !important;border-radius:0px !important;" value="{if $getFHistEditDataCnt > 0 && $getFHistEditData.0->relationship_age > 0}{$getFHistEditData.0->relationship_age}{/if}">
+    <!--<input type="number" name="rel_age" min="1" maxlength="150" id="rel_age">-->
+    <script type="text/javascript">
+        function checkMinMaxValues(inputValue, minValue, MaxValue) {
+            if (isNaN(parseInt(inputValue))) 
+                return "";
+            else if (parseInt(inputValue) < minValue || isNaN(parseInt(inputValue)))
+                return 1;
+            else if (parseInt(inputValue) > MaxValue)
+                return 150;
+            else return inputValue;
+        }
+    </script>
+</body>
+</html>

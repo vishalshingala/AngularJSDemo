@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Angular Directive Examplate(Call Directive from Another Directive)</title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <script src="Scripts/angular-route.js" type="text/javascript"></script>
+</head>
+<body>
+    <div ng-controller="demoController">
+        Category Data:
+        <table border="1" style="margin-top:20px;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>CategoryId</th>
+                    <th>CategoryName</th>
+                    <th>TemplateExists</th>
+                    <th>CustomName</th>     
+                    <th><strong>Action</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in categoryData" ng-click="onClickCategoryRowClick(data)">
+                    <td>{{$index}}</td>
+                    <td>{{data.CategoryId}}</td>
+                    <td>{{data.CategoryName}}</td>
+                    <td>{{getTemplateExists(data.Templates)}}</td>
+                    <td><input type="text" ng-model="data.CategoryCustomName" /></td>
+                    <td><button type="button" ng-click="onClickUpdateRowData(data)">Update</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        Selected Category <strong>{{selectedCategory}}</strong> Inspections:
+        <br />
+        <inspection-template>
+            Transcluded Content 
+        </inspection-template>
+    </div>
+    <script type="text/javascript">
+        var myApp = angular.module("myApp", []);
+        myApp.directive("inspectionTemplate", function () {
+            return {
+                restrict: "EA",
+                //template: "<table><thead><tr><td>TemplateId</td><td>TemplateName</td></tr></thead><tbody><tr ng-repeat='temp in selectedTemplates'><td>{{temp.TemplateId}}</td><td>{{temp.TemplateName}}</td></tr></tbody></table>",
+                templateUrl: '/Directives/Template.html',
+                transclude:true,
+                link: link
+            };
+            function link($scope, $element, $attr) {
+                if (!$scope.$$phase) {
+                    //$digest or $apply
+                    $scope.$apply();
+                }
+
+                //var checkDivAppend = "<div id='checkDivAppendId'>Hello Div Appended !!</div>";
+                //$element.append(jQuery(checkDivAppend));
+                //jQuery(checkDivAppend).append($element);
+            }
+        });
+        myApp.controller("demoController", function ($scope, $http, $compile, dataService) {
+            $scope.categoryData;
+            $scope.selectedTemplates = [];
+            $scope.selectedRow = null;
+            $scope.selectedCategory;
+            //dataService.getCategoryData.then(function (response) {
+            //    $scope.selectedCategory = response;
+            //}, function (errorResponse) {
+            //    debugger;
+            //});
+            $http({
+                method: 'GET',
+                url: 'jsonData.json'
+            }).then(function successCallback(response) {
+                // this callback wil
+                $scope.categoryData = response.data.CategoryData;
+            }, function errorCallback(response) {
+                $scope.categoryData = [];
+            });
+            $scope.getTemplateExists = function (template) {
+                return (template.length>0)?"Yes":"No"
+            }
+            $scope.onClickCategoryRowClick = function (template) {
+                $scope.selectedTemplates = template.Templates;
+                $scope.selectedCategory = template.CategoryName;
+                $compile(angular.element("<inspection-template></inspection-template>"))($scope)
+            }
+            $scope.onClickUpdateRowData = function (rowCategoryData) {
+                debugger;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+                //if ($scope.categoryData) {
+                //    if (!rowCategoryData.CategoryCustomName || $.trim(rowCategoryData.CategoryCustomName)!="")
+                //    $scope.categoryData.filter(function (currentCategory, index, arr) {
+                //        debugger;
+                //    });
+                //}
+            }
+        });
+        myApp.controller("secondDemoController", function ($scope) {
+            debugger;
+        });
+
+        myApp.factory("dataService", function ($http) {
+            return {
+                getCategoryData: getCategoryData
+            };
+
+            function getCategoryData() {
+                var defer = $q.defer();               
+                 $http({
+                        method: 'GET',
+                        url: 'jsonData.json'
+                        }).then(function successCallback(response) {
+                            // this callback wil
+                            defer.resolve(response.data.CategoryData);
+                        }, function errorCallback(response) {
+                            defer.reject(response);
+                        });
+                 return defer.promise;
+            }
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+</head>
+<body>
+    <div>
+        <form>
+            <table style="width:50%;text-align:center" id="table1">
+                <thead>
+                    <tr>
+                        <td>Label</td>
+                        <td>Field</td>
+                        <td>Error Column</td>
+                    </tr>
+                </thead>
+                <tr id="tr1">
+                    <td colspan="3">&nbsp; </td>
+                </tr>
+                <tr id="tr2">
+                    <td>First Name</td>
+                    <td> <input type="text" id="firstNameId" /> </td>
+                    <td> <span id="error_firstNameId" style="color:red"></span> </td>
+                </tr>
+                <tr id="tr3">
+                    <td>Last Name</td>
+                    <td> <input type="text" id="lastNameId" /> </td>
+                    <td> <span id="error_lastNameId" style="color:red"></span> </td>
+                </tr>
+                <tr id="tr4">
+                    <td>Contact No</td>
+                    <td> <input type="text" id="contactNoId" /> </td>
+                    <td> <span id="error_contactNoId" style="color:red"></span> </td>
+                </tr>
+                <tr id="tr5">
+                    <td>Contact No</td>
+                    <td> <input type="text" id="contactNoId" /> </td>
+                    <td> <span id="error_contactNoId" style="color:red"></span> </td>
+                </tr>
+                <br />
+                <br />
+                <tr>
+                    <td colspan="3">&nbsp; </td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <button type="button" style="width:100px;height:30px;" id="btnSubmitId">Submit</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnSubmitId").click(function () {
+                debugger;
+                $("#table1")
+                $('table#table1 tr#tr3').remove();
+                var id = "tr3";
+                $('table#table1 tr#'+id).remove();
+                //var values = $("[id^='error_']");
+                //$.each(values, function (index, sender) {
+                //    $(sender).text('');
+                //});
+                //var firstName = $.trim($("#firstNameId").val());
+                //var lastName = $.trim($("#lastNameId").val());
+                //var contactNoName = $.trim($("#contactNoId").val());
+                //if (firstName == "") {
+                //    $("#error_firstNameId").text("Enter First Name");
+                //}
+                //if (lastName=="") {
+                //    $("#error_lastNameId").text("Enter Last Name");
+                //}
+                //if (contactNoName == "") {
+                //    $("#error_contactNoId").text("Enter Contact No");
+                //}                
+            });
+        });
+    </script>
+</body>
+</html>

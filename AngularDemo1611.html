@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Provider And Config Test</title>
+    <meta charset="utf-8" />
+    <meta content="$parent.$eval(metaData1)" />
+    <meta content="{{metaData2}}" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <script src="Scripts/angular-route.js"></script>
+</head>
+<body>
+    <div ng-controller="myController">
+
+    </div>
+    <script type="text/javascript">
+        var app = angular.module("myApp", ["ngRoute"]);
+        app.controller("myController", function ($scope,$http) {
+            debugger;
+            //            $scope.metaData1 = "Vishal";
+            $scope.metaData1 = function () {
+                return "Vishal";
+            }
+            $scope.metaData2 = "Vishal";
+        });
+    </script>
+</body>
+</html>

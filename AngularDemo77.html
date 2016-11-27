@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Scopes</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <style>
+        .expander{
+            border:1px solid black;
+            width:250px;
+        }
+        .expander > .title{
+            background-color:black;
+            color:white;
+            padding:.1em .3em;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="demoController">
+        Demo Controller Scope Message : {{message}} <br />
+        <message-promt msg="makeUpperCase()">
+            <!--Pass Scope Propery name msg="message" -->
+        </message-promt>
+    </div>
+    <hr />
+    <hr />
+    <div ng-controller="expandController">
+        <expander class="expander" expandtitle="title" expandflag="selectedIndex">
+            {{text}}
+        </expander>
+    </div>
+    <hr />
+    <h1>Directive to Directive Communication</h1>
+    <div ng-controller="someController">
+        <outer>
+            <inner>
+            </inner>
+        </outer>
+    </div>
+    
+    <script type="text/javascript">
+        // Directive Scopes
+        // 1. No scope property in the DDO
+        //    or scoope:false (default)
+        //  ====> the Directive will share the parent scope
+
+        // 2. scope : true i the DDO
+        //  ====> The Directive will have it's own scope protypically inherited from the parent scope
+        // 3. Scope object in the DDO
+        //  ====> AKA isolate scope
+        //        The Directive scope does not inherit fro the parent scope.
+        //        However, the directive can setup bindings to parent scope objects on a need basis selectively
+
+
+        var myApp = angular.module("myApp", []);
+        myApp.controller("demoController", function ($scope) {
+            $scope.message = "Demo Controller Message";
+            $scope.makeUpperCase = function () {
+                return $scope.message.toUpperCase();
+            }
+        });
+        myApp.controller("secondController", function ($scope) {
+            $scope.message = "Second Controller Message";
+        });
+        myApp.controller("thirdController", function ($scope) {
+            //$scope.message = "Second Controller Message";
+        });
+
+        myApp.controller("expandController", function ($scope) {
+            $scope.text = "Click Div to Expand";
+            $scope.title = "Demo Expanded Title text Demo Expanded Title text Demo Expanded Title text";
+            $scope.selectedIndex = -1;
+        });
+
+        myApp.controller("someController", function ($scope) {
+            console.log("Inside someController Scope Object");
+            console.log($scope);
+        });
+
+        myApp.directive("messagePromt", function () {
+            return {
+                restrict: 'E',
+                templateUrl: '/Directives/MessagePromtTemplate1.html',
+                //scope:true
+                scope: { // Scope functiontake precidnence over link function
+                    //message:'@msg' // One Way Binding its alwasy expect string valuess in case of object we need to serialized object and then pass or pass by function
+                    //message: '=msg'  // Two way binding
+                    uCase:'&msg'  // Function
+                },
+                link: function (scope,element,attr) {
+                    console.log("Inside Directives Scope Object");
+                    console.log(scope);
+                }
+            }
+        });
+
+        // One Way binding pass actual values and two way binding pass property values
+        myApp.directive("expander", function () {
+            return {
+                restrict: 'EA',
+                transclude: true,
+                scope:{
+                    title: "=expandtitle",
+                    selectedIndex: "=expandflag"
+                },
+                templateUrl: "/Directives/MessagePromtTemplate2.html",
+                link: function (scope, element, attr) {
+                    element.on("click", function (event) {
+                        scope.selectedIndex = !scope.selectedIndex;
+                        scope.$apply();
+                    });
+                }
+            }
+        });
+
+        // Directiv eto Directive Communication
+
+        myApp.directive("outer", function () {
+            return {
+                restrict: 'E',
+                controller: function ($scope) {
+                    console.log("Inside outer Directive Scope Object");
+                    console.log($scope);
+                    this.scream = function (text) {
+                        console.log(text.toUpperCase());
+                    }
+                }
+            }
+        });
+        myApp.directive("inner", function () {
+            return {
+                restrict: 'E',
+                require:'^outer',
+                link: function (scope,element,attr,controller) {
+                    controller.scream("Hello from inner ");
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

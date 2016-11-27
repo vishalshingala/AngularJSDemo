@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Scopes</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+</head>
+<body>
+    <div ng-controller="demoController">
+        Demo Controller Scope Message : {{message}} <br />
+        <message-promt>
+        </message-promt>
+        <message-promt>
+
+        </message-promt>
+    </div>
+    <hr />
+    <div ng-controller="secondController">
+        Second Controller Scope Message : {{message}} <br />
+        <message-promt>
+        </message-promt>
+    </div>
+    <hr />
+    <div ng-controller="thirdController">
+        <input numaric-key-directive />
+    </div>
+    <script type="text/javascript">
+        // Directive Scopes
+        // 1. No scope property in the DDO
+        //    or scoope:false (default)
+        //  ====> the Directive will share the parent scope
+
+        // 2. scope : true i the DDO
+        //  ====> The Directive will have it's own scope protypically inherited from the parent scope
+        // 3. Scope object in the DDO
+        //  ====> AKA isolate scope
+        //        The Directive scope does not inherit fro the parent scope.
+        //        However, the directive can setup bindings to parent scope objects on a need basis selectively
+
+
+        var myApp = angular.module("myApp", []);
+        myApp.controller("demoController", function ($scope) {
+            $scope.message = "Demo Controller Message";
+            console.log("Controler Scope Object");
+            console.log($scope);
+        });
+        myApp.controller("secondController", function ($scope) {
+            $scope.message = "Second Controller Message";
+        });
+        myApp.controller("thirdController", function ($scope) {
+            //$scope.message = "Second Controller Message";
+        });
+
+        myApp.directive("messagePromt", function () {
+            return {
+                restrict: 'E',
+                templateUrl: '/Directives/MessagePromtTemplate.html',
+                //scope:true
+                scope: {},
+                link: function (scope,element,attr) {
+                    console.log("Directives Scope Object");
+                    console.log(scope);
+                },
+                controller: 'secondController'
+            }
+        });
+
+        myApp.directive("numaricKeyDirective", function () {
+            return {
+                restrict: 'EA',
+                link: function (scope, element, attr) {
+                    debugger;
+                    // Even Bubling will not happen after event.preventDegault();
+                    element.on("keydown", function (e) {
+                        if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+                        }
+                        else {
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

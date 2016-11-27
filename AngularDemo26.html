@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+    <title>Angular Service</title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        // In fuction if we assign this. then its construction function
+        var myApp = angular.module("MyApp", []);
+        myApp.factory("dataServiceFactory", function () {
+            return {
+                names: [{ name: "VIshal", city: "rajkot" },
+                        { name: "Shingala", city: "mumbai" },
+                        { name: "Vaidik", city: "ahmedabad" } ]
+            }
+        });
+        myApp.controller("ListController", function ($scope, dataServiceFactory) {
+            $scope.names = dataFactory.names;
+        });
+    </script>
+</body>
+</html>

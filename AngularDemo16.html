@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+</head>
+<body>
+    <div ng-controller="ListController">
+        <h3>List of Names</h3>
+        <p>
+            <ul ng-repeat="actor in actors">
+                <li>
+                    Index:{{$index}}
+                    Name: <span ng-show="$index!=editIndex">{{actor.name}}</span>
+                    <span ng-show="$index==editIndex"><input type="text" ng-model="actor.name" /></span>
+                    City: <strong>{{actor.city}}</strong>
+                    <button ng-click="deleteName($index)">X</button>
+                    <span ng-show="$index!=editIndex"><button ng-click="editClicked($index)">Edit</button></span>
+                    <span ng-show="$index==editIndex"><button ng-click="saveClicked(actor,$index)">Save</button><button ng-click="cancelClicked($index)">Cancel</button></span>
+                    
+                </li>
+            </ul>
+        </p>
+        <p>
+            <label>Width:<input type="text" ng-model="width" /></label>
+            <label>Height:<input type="text" ng-model="height" /></label>
+        </p>
+        <img ng-src="http://stevensegallery.com/{{width}}/{{height}}" alt="Steven Seagal Image" />
+    </div>
+
+    <hr />
+
+    <div ng-controller="firstController">
+
+    </div>
+    <div ng-controller="secondController">
+
+    </div>
+    <script type="text/javascript">
+        var myApp = angular.module("MyApp", []);
+        var listController = function ($scope) {
+            $scope.actors = [
+                { name: "VIshal", city: "rajkot" },
+                { name: "Shingala", city: "mumbai" },
+                { name: "Vaidik", city: "ahmedabad" },
+            ];
+            $scope.actorObject = {
+                name: "Vishal",
+                city: "Rajkot",
+                phoneNo: 8050,
+            };
+            $scope.btnAddName = function () {
+                $scope.actors.push({ name: $scope.actorName, city: $scope.actorCity });
+                $scope.actorName = "";
+                $scope.actorCity = "";
+            }
+            $scope.deleteName = function (index) {
+                $scope.actors.splice(index, 1);
+            }
+            $scope.editIndex = -1;
+            $scope.editValue = "";
+            $scope.editClicked = function (index) {
+                $scope.editIndex = index;
+                $scope.editValue = $scope.actors[index].name;
+            }
+
+            $scope.saveClicked = function (actor,index) {
+                $scope.actors[index].name = actor.name;
+                $scope.editValue = "";
+                $scope.editIndex = -1;
+            }
+            $scope.cancelClicked = function (index) {
+                $scope.editIndex = -1;
+                $scope.actors[index].name = $scope.editValue;
+                $scope.editValue = "";
+            }
+
+        }
+        myApp.controller("ListController", listController);
+
+        myApp.controller("firstController", function ($scope) {
+            console.log("First Controller");
+            console.log($scope);
+        });
+        myApp.controller("secondController", function ($scope) {
+            console.log("Second Controller");
+            console.log($scope);
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+﻿{
+    "CategoryData": [
+        {
+            "CategoryId": 1,
+            "CategoryName": "Category1",
+            "Templates": [
+                {
+                    "TemplatesId": 1,
+                    "TemplatesName": "TemplatesName1",
+                    "CategoryId": 1
+                },
+                {
+                    "TemplatesId": 2,
+                    "TemplatesName": "TemplatesName2",
+                    "CategoryId": 1
+                },
+
+                {
+                    "TemplatesId": 3,
+                    "TemplatesName": "TemplatesName3",
+                    "CategoryId": 1
+                }
+            ]
+        },
+        {
+            "CategoryId": 2,
+            "CategoryName": "Category2",
+            "Templates": [
+                {
+                    "TemplatesId": 12,
+                    "TemplatesName": "TemplatesName12",
+                    "CategoryId": 2
+                },
+                {
+                    "TemplatesId": 22,
+                    "TemplatesName": "TemplatesName22",
+                    "CategoryId": 2
+                },
+
+                {
+                    "TemplatesId": 32,
+                    "TemplatesName": "TemplatesName32",
+                    "CategoryId": 2
+                }
+            ]
+        },
+        {
+            "CategoryId": 3,
+            "CategoryName": "Category3",
+            "Templates": [
+                {
+                    "TemplatesId": 13,
+                    "TemplatesName": "TemplatesName13",
+                    "CategoryId": 3
+                },
+                {
+                    "TemplatesId": 23,
+                    "TemplatesName": "TemplatesName23",
+                    "CategoryId": 3
+                },
+
+                {
+                    "TemplatesId": 33,
+                    "TemplatesName": "TemplatesName33",
+                    "CategoryId": 3
+                }
+            ]
+        },
+        {
+            "CategoryId": 4,
+            "CategoryName": "Category4",
+            "Templates": [
+                {
+                    "TemplatesId": 14,
+                    "TemplatesName": "TemplatesName14",
+                    "CategoryId": 4
+                },
+                {
+                    "TemplatesId": 24,
+                    "TemplatesName": "TemplatesName24",
+                    "CategoryId": 4
+                },
+
+                {
+                    "TemplatesId": 34,
+                    "TemplatesName": "TemplatesName34",
+                    "CategoryId": 4
+                }
+            ]
+        },
+        {
+            "CategoryId": 5,
+            "CategoryName": "Category5",
+            "Templates": [
+                {
+                    "TemplatesId": 15,
+                    "TemplatesName": "TemplatesName15",
+                    "CategoryId": 5
+                },
+                {
+                    "TemplatesId": 25,
+                    "TemplatesName": "TemplatesName25",
+                    "CategoryId": 5
+                },
+
+                {
+                    "TemplatesId": 35,
+                    "TemplatesName": "TemplatesName35",
+                    "CategoryId": 5
+                }
+            ]
+        }
+
+    ]
+    
+}

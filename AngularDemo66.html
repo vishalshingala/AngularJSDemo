@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Directives Demo</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/angular.js" type="text/javascript"></script>
+    <style>
+        .LoudText{
+            color:yellow;
+            text-transform:uppercase;
+        }
+    </style>
+</head>
+<body ng-controller="testController">
+    <h1>Directives Demo</h1>
+    <test-directive></test-directive>
+    <div hello-directive></div>
+    <div>
+        This content comes before my hello directive
+        <hello-directive></hello-directive>
+    </div>
+    PersonList
+    <person-list-directive></person-list-directive>
+    <br />
+    <!--Setting the replace property to true-->
+    PersonList-1
+    <person-list-directive1></person-list-directive1>
+
+    <hr style="border-bottom-width:10px;" />
+
+    <div>
+        <!--<div my-directive>
+            SuperMan
+        </div>-->
+        <my-directive>
+            SuperMan
+        </my-directive>
+    </div>
+
+    <hr />
+    <div>
+        <my-directive>
+            <my-sub-directive>
+            </my-sub-directive>
+        </my-directive>
+    </div>
+
+    <hr style="border-bottom-width:10px;" />
+    <h1>Using clicker Directives</h1>
+    <div>
+        Div Clicked {{count}} times
+        <div clicker class="LoudText"></div>
+        <!--<clicker>
+        </clicker>-->
+    </div>
+
+    <script type="text/javascript">
+        var myApp = angular.module("myApp", []);
+        myApp.controller("testController", function ($scope) {
+            $scope.person = [{ name: "VIshal", city: "rajkot" },
+                        { name: "Shingala", city: "mumbai" },
+                        { name: "Vaidik", city: "ahmedabad" }];
+            console.log("In the controller $scope id");
+            console.log($scope);
+            $scope.count = 0;
+        });
+        myApp.directive("testDirective", function () {
+            //DD) - Directive Defination Object
+            return {
+                template: "Hello I am a test directie"
+            }
+        });
+        myApp.directive("helloDirective", function () {
+            return {
+                template: "Hello {{person.name}}",
+            }
+        });
+        myApp.directive("personListDirective", function () {
+            return {
+                template: "<ul ng-repeat='personName in person'>" +
+                    "<li>Name:<strong>{{personName.name}}</strong>" +
+                    "City:<strong>{{personName.city}}</strong></li>" +
+                    "</ul>"
+            }
+        });
+        myApp.directive("personListDirective1", function () {
+            return {
+                templateUrl: '/Directives/PersonList.html'
+            }
+        });
+
+        // Code After Hr Tag 
+
+        // Restrict Property Values 
+        // A-Attribute (Default)
+            // <div my-directive></div>
+        // E-Element(Default)
+            // <my-directive></my-directive>
+        //C-Class
+            //<div class="my-directive"></div>
+        //M-Comment
+            //<!-directive:my-directive -->
+        myApp.directive("myDirective", function () {
+            return {
+                restrict:"EA",
+                transclude: true,
+                templateUrl: '/Directives/PersonList.html',
+                //template:'Hello and welcome'+
+                //        '<span ng-transclude></span',
+            }
+        });
+        myApp.directive("mySubDirective", function () {
+            return {
+                template:"Hello OverRide Data"
+            }
+        });
+
+        // Directive Link Function Example
+
+        myApp.directive("clicker", function () {
+            return {
+                restrict: "AE",
+                //Use link function to do DOM manipullation
+                template:"Super",
+                link: function (scope,element,attributes,controllers,transclude) {
+                    console.log("Directive $scope:");
+                    console.log(scope);
+                    console.log("Directive element:");
+                    console.log(element);
+                    element.css({ 'width': '500px', 'height': '500px','background-color':'red' });
+                    console.log("Directive attributes:");
+                    console.log(attributes);
+                    element.on('click', function () {
+                        debugger;
+                        scope.count = scope.count + 1;
+                        scope.$apply();
+                    });
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
